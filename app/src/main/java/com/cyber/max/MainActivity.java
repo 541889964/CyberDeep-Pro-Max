@@ -30,7 +30,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView, rvHistory;
     private EditText etInput;
-    private TextView tvStatus;
     private GeckoView geckoView;
     private LinearLayout nativeLayout;
     private MaterialToolbar toolbar;
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         ImageButton btnSend = findViewById(R.id.btnSend);
         geckoView = findViewById(R.id.geckoView);
         nativeLayout = findViewById(R.id.nativeLayout);
-        tvStatus = findViewById(R.id.tvStatus);
         rvHistory = findViewById(R.id.rvHistory);
 
         // 初始化 RecyclerView
@@ -111,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             historyAdapter.notifyDataSetChanged();
             adapter.notifyDataSetChanged();
             drawerLayout.closeDrawers();
-            if (isPageHooked) session.evaluateJS("javascript:location.reload();", null);
+            if (isPageHooked) session.loadUri("javascript:location.reload();");
             Toast.makeText(this, "已开启新对话", Toast.LENGTH_SHORT).show();
         });
 
@@ -134,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         pendingAiText.setLength(0);
 
         String js = "javascript:window.cyberSend(" + JSONObject.quote(prompt) + ");";
-        session.evaluateJS(js, null);
+        session.loadUri("javascript:" + js);
     }
 
     private void initGeckoView() {
@@ -215,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
             "  };" +
             "  document.title = '就绪';" +
             "})();";
-        session.evaluateJS("javascript:" + js, null);
+        session.loadUri("javascript:" + js);
     }
 
     private void scheduleUiUpdate() {
@@ -311,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         @Override public int getItemCount() { return historyList.size(); }
-        class VH extends RecyclerView.ViewHolder { TextView tvTitle; VH(View v) { super(v); tvTitle = v.findViewById(R.id.tvTitle); } }
+        class VH extends RecyclerView.ViewHolder { TextView tvTitle; VH(View v) { super(v); tvTitle = v.findViewById(R.id.tvHistoryTitle); } }
     }
 
     static class Msg { String role, content; Msg(String role, String content) { this.role = role; this.content = content; } }
