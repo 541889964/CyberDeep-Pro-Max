@@ -1,0 +1,3 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="12dp" android:background="?attr/selectableItemBackground">
+    <TextView android:id="@+id/tvHistoryTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="会话 1" android:textColor="#D1D5DB" android:maxLines="1" android:ellipsize="end"/>
+</LinearLayout>

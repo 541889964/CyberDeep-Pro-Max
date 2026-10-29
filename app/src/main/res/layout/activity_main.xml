@@ -1,0 +1,35 @@
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 主聊天界面 -->
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg_main">
+        <org.mozilla.geckoview.GeckoView android:id="@+id/geckoView" android:layout_width="match_parent" android:layout_height="match_parent" />
+        
+        <LinearLayout android:id="@+id/nativeLayout" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@color/bg_main" android:visibility="gone">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/bg_surface"
+                app:title="赛博助手 (长按切网页)"
+                app:titleTextColor="#FFF" />
+
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/recyclerView" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:padding="12dp" android:clipToPadding="false"/>
+            
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="12dp" android:background="@color/bg_surface" android:elevation="8dp">
+                <EditText android:id="@+id/etInput" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:background="@drawable/bg_input" android:hint="给赛博助手发送消息..." android:textColor="#FFF" android:textColorHint="@color/text_sub" android:paddingStart="16dp" android:paddingEnd="16dp" />
+                <ImageButton android:id="@+id/btnSend" android:layout_width="48dp" android:layout_height="48dp" android:layout_marginStart="8dp" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/ic_send" android:scaleType="centerInside"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- 侧滑菜单 (历史会话) -->
+    <LinearLayout android:layout_width="280dp" android:layout_height="match_parent" android:layout_gravity="start" android:background="#1F2937" android:orientation="vertical" android:padding="16dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="历史对话记录" android:textColor="#FFF" android:textSize="18sp" android:textStyle="bold" android:layout_marginBottom="16dp"/>
+        <Button android:id="@+id/btnNewChat" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="+ 新建对话" android:backgroundTint="#00E5FF" android:textColor="#000" android:layout_marginBottom="16dp"/>
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvHistory" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"/>
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
