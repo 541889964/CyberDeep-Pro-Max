@@ -87,18 +87,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> drawerLayout.openDrawer(rvHistory));
         
-        toolbar.setOnLongClickListener(v -> {
-            if (geckoView.getVisibility() == View.VISIBLE) {
-                geckoView.setVisibility(View.GONE);
-                nativeLayout.setVisibility(View.VISIBLE);
-                Toast.makeText(this, "已切换到原生聊天", Toast.LENGTH_SHORT).show();
-            } else {
-                geckoView.setVisibility(View.VISIBLE);
-                nativeLayout.setVisibility(View.GONE);
-                Toast.makeText(this, "请刷新或重新登录", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        });
+
 
         // 新建对话
         findViewById(R.id.btnNewChat).setOnClickListener(v -> {
@@ -111,6 +100,26 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawers();
             if (isPageHooked) session.loadUri("javascript:location.reload();");
             Toast.makeText(this, "已开启新对话", Toast.LENGTH_SHORT).show();
+        });
+
+        // 绑定悬浮球点击切换
+        com.google.android.material.floatingactionbutton.FloatingActionButton fabToggle = findViewById(R.id.fabToggle);
+        fabToggle.setOnClickListener(v -> {
+            if (geckoView.getVisibility() == View.VISIBLE) {
+                geckoView.setVisibility(View.GONE);
+                nativeLayout.setVisibility(View.VISIBLE);
+                fabToggle.setVisibility(View.GONE);
+                Toast.makeText(this, "已进入原生聊天", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 左上角菜单打开侧滑栏
+        toolbar.setNavigationOnClickListener(v -> drawerLayout.openDrawer(rvHistory));
+        // 点击标题返回网页
+        toolbar.setOnClickListener(v -> {
+            geckoView.setVisibility(View.VISIBLE);
+            nativeLayout.setVisibility(View.GONE);
+            fabToggle.setVisibility(View.VISIBLE);
         });
 
         initGeckoView();
